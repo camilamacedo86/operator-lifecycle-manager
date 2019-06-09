@@ -11,6 +11,7 @@ Note: Make sure your branch is rebased to the latest upstream master.
 
 **Motivation for the change:**
 
+<<<<<<< HEAD
 **Reviewer Checklist**
 - [ ] Implementation matches the proposed design, or proposal is updated to match implementation
 - [ ] Sufficient unit test coverage 
@@ -19,6 +20,8 @@ Note: Make sure your branch is rebased to the latest upstream master.
 - [ ] Commit messages sensible and descriptive
 
 
+=======
+>>>>>>> feat(github) : Add github files in order to follow org standard
 <!--
 
 Note: If this PR is fixing an issue make sure to add a note saying:
