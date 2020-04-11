@@ -1,4 +1,5 @@
 <img src="/logo.svg" height="125px" alt="Operator Lifecycle Manager"></img>
+
 [![Docker Repository on Quay](https://quay.io/repository/coreos/alm/status?token=ccfd2fde-446d-4d82-88a8-4386f8deaab0 "Docker Repository on Quay")](https://quay.io/repository/coreos/alm) 
 [![Docker Repository on Quay](https://quay.io/repository/coreos/catalog/status?token=b5fc43ed-9f5f-408b-961b-c8493e983da5 "Docker Repository on Quay")](https://quay.io/repository/coreos/catalog) 
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -72,8 +73,6 @@ For a complete end-to-end example of how OLM fits into the Operator Framework, s
 
 Check how to [Publish your Operator on OperatorHub.io](https://operatorhub.io/contribute).
 
-# Key Concepts
-
 ## Kubernetes-native Applications
 
 An Operator is an application-specific controller that extends the Kubernetes API to create, configure, manage, and operate instances of complex applications on behalf of a user.
@@ -89,6 +88,8 @@ ClusterServiceVersions can be collected into `CatalogSource`s which will allow a
 
 Learn more about the components used by OLM by reading about the [architecture] and [philosophy].
 
+# Key Concepts
+
 ## CustomResourceDefinitions
 
 OLM standardizes interactions with operators by requiring that the interface to an operator be via the Kubernetes API. Because we expect users to define the interfaces to their applications, OLM currently uses CRDs to define the Kubernetes API interactions.  
@@ -99,7 +100,7 @@ Examples: [EtcdCluster CRD](https://github.com/operator-framework/community-oper
 
 OLM introduces the notion of “descriptors” of both `spec` and `status` fields in kubernetes API responses. Descriptors are intended to indicate various properties of a field in order to make decisions about their content. For example, this can drive connecting two operators together (e.g. connecting the connection string from a mysql instance to a consuming application) and be used to drive rich interactions in a UI.
 
-[See an example of a ClusterServiceVersion with descriptors][csv_sample]
+[See an example of a ClusterServiceVersion with descriptors](https://github.com/operator-framework/community-operators/blob/master/community-operators/etcd/0.9.2/etcdoperator.v0.9.2.clusterserviceversion.yaml)
 
 ## Dependency Resolution
 
@@ -125,7 +126,7 @@ OLM has the concept of catalogs, which are repositories of application definitio
 
 Catalogs contain a set of Packages, which map “channels” to a particular application definition. Channels allow package authors to write different upgrade paths for different users (e.g. alpha vs. stable).
 
-Example: [etcd package][etcd]
+Example: [etcd package](https://github.com/operator-framework/community-operators/blob/master/community-operators/etcd/etcd.package.yaml)
 
 Users can subscribe to channels and have their operators automatically updated when new versions are released.
 
@@ -146,41 +147,33 @@ spec:
 
 This will keep the etcd `ClusterServiceVersion` up to date as new versions become available in the catalog.
 
-Catalogs are served internally over a grpc interface to OLM from [operator-registry][registry] pods.
+Catalogs are served internally over a grpc interface to OLM from [operator-registry](https://github.com/operator-framework/operator-registry) pods.  Catalog data such as `bundles` are documented [there](https://github.com/operator-framework/operator-registry#manifest-format) as well.
 
-# Samples
+## Samples
 
-To explore any operator samples built using the operator-sdk, see the [operator-sdk-samples][samples].
+To explore any operator samples using the OLM, see the [https://operatorhub.io/](https://operatorhub.io/) and its resources in [Community Operators](https://github.com/operator-framework/community-operators/tree/master/upstream-community-operators). 
 
-# Contributing
+## Contributing
 
-See [CONTRIBUTING][contrib] for details on submitting patches and the contribution workflow.
+See the [proposal docs][proposals_docs] and issues for ongoing or planned work.
 
-# Reporting bugs
+## Reporting bugs
 
 See [reporting bugs][bug_guide] for details about reporting any issues.
 
-# License
+## License
 
 Operator SDK is under Apache 2.0 license. See the [LICENSE][license_file] file for details.
 
-[operator_link]: https://coreos.com/operators/
-[samples]: https://github.com/operator-framework/operator-sdk-samples
-[of-home]: https://github.com/operator-framework
-[of-blog]: https://coreos.com/blog/introducing-operator-framework
-[contrib]: ./CONTRIBUTING.MD
-[bug_guide]:./doc/dev/reporting_bugs.md
-[license_file]: ./LICENSE
-[dep_tool]: https://golang.github.io/dep/docs/installation.html
-[git_tool]: https://git-scm.com/downloads
-[go_tool]: https://golang.org/dl/
-[docker_tool]: https://docs.docker.com/install/
-[podman_tool]: https://github.com/containers/libpod/blob/master/install.md
-[buildah_tool]: https://github.com/containers/buildah/blob/master/install.md
-[kubectl_tool]: https://kubernetes.io/docs/tasks/tools/install-kubectl/
-[registry]: https://github.com/operator-framework/operator-registry 
-[etcd]: https://github.com/operator-framework/community-operators/blob/master/community-operators/etcd/etcd.package.yaml
-[csv_sample]: https://github.com/operator-framework/community-operators/blob/master/community-operators/etcd/etcdoperator.v0.9.2.clusterserviceversion.yaml
 [architecture]: /doc/design/architecture.md
 [philosophy]: /doc/design/philosophy.md
 [installation guide]: /doc/install/install.md
+[git_tool]:https://git-scm.com/downloads
+[go_tool]:https://golang.org/dl/
+[docker_tool]:https://docs.docker.com/install/
+[podman_tool]:https://github.com/containers/libpod/blob/master/install.md
+[buildah_tool]:https://github.com/containers/buildah/blob/master/install.md
+[kubectl_tool]:https://kubernetes.io/docs/tasks/tools/install-kubectl/
+[proposals_docs]: ./doc/contributors/design-proposals
+[license_file]:./LICENSE
+[bug_guide]:./doc/dev/reporting_bugs.md

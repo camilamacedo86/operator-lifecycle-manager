@@ -2,6 +2,12 @@
 #  OLM - Build and Test  #
 ##########################
 
+# Undefine GOFLAGS environment variable.
+ifdef GOFLAGS
+$(warning Undefining GOFLAGS set in CI)
+undefine GOFLAGS
+endif
+
 SHELL := /bin/bash
 PKG   := github.com/operator-framework/operator-lifecycle-manager
 MOD_FLAGS := $(shell (go version | grep -q -E "1\.1[1-9]") && echo -mod=vendor)
@@ -93,7 +99,6 @@ run-local: build-linux build-wait build-util-linux
 	. ./scripts/package_release.sh 1.0.0 build/resources doc/install/local-values.yaml
 	. ./scripts/install_local.sh $(LOCAL_NAMESPACE) build/resources
 	rm -rf build
-
 
 deploy-local:
 	mkdir -p build/resources

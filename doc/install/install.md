@@ -4,6 +4,14 @@ OLM deployment resources are templated so that they can be easily configured for
 
 # Installation Options
 
+## Manual installation 
+
+Installing the CRDs first gives them a chance to register before installing the rest, which requires the CRDs exist.
+```bash
+kubectl create -f deploy/upstream/quickstart/crds.yaml
+kubectl create -f deploy/upstream/quickstart/olm.yaml
+```
+
 ## Release binary
 
 Check out the latest [releases on github](https://github.com/operator-framework/operator-lifecycle-manager/releases) for release-specific install instructions.
@@ -116,11 +124,44 @@ To configure a release of OLM for installation in a cluster:
 
 The above steps are automated for official releases with `make ver=0.3.0 release`, which will output new versions of manifests in `deploy/tectonic-alm-operator/manifests/$(ver)`.
 
+## Overriding the Global Catalog Namespace
+
+It is possible to override the Global Catalog Namespace by setting the `GLOBAL_CATALOG_NAMESPACE` environment variable in the catalog operator deployment.
+
+## Subscribe to a Package and Channel
+
+Cloud Services can be installed from the catalog by subscribing to a channel in the corresponding package.
+
+If using one of the `local` run options, this will subscribe to `etcd`, `vault`, and `prometheus` operators. Subscribing to a service that doesn't exist yet will install the operator and related CRDs in the namespace.
+
+```yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: etcd
+  namespace: olm
+spec:
+  channel: singlenamespace-alpha
+  name: etcd
+  source: operatorhubio-catalog
+  sourceNamespace: olm
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: prometheus
+  namespace: olm
+spec:
+  channel: alpha
+  name: prometheus
+  source: operatorhubio-catalog
+  sourceNamespace: olm
+```
+
 # Uninstall
 
 Run the command `make uninstall`.
 
-<<<<<<< HEAD:Documentation/install/install.md
 If using one of the `local` run options, this will subscribe to `etcd`, `vault`, and `prometheus` operators. Subscribing to a service that doesn't exist yet will install the operator and related CRDs in the namespace.
 
 ```yaml
@@ -148,4 +189,3 @@ spec:
 ```
 =======
 **NOTE** Valid just for local/manual installs. 
->>>>>>> doc(Readme/Install) : Organize information in order to make more understanble and add missing steps:doc/install/install.md
